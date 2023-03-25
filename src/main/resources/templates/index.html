@@ -254,7 +254,7 @@
         cp = [...data.filter(log => log.text.includes(txt))]
           .sort((al, bl) => al.id - bl.id);
       } else {
-        cp = [...data]
+        cp = [...data].sort((al, bl) => al.id - bl.id);
       }
 
       clearNoData();
