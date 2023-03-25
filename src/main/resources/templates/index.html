@@ -151,15 +151,27 @@
       <div>
         <div class="container">
           <div class="row">
+            <div class="col-md-12">
+              <div class="d-flex justify-content-between">
+                <div>
+
+                </div>
+                <div>
+                  <button id="connect" onclick="connect();">Connect</button>
+                  <button id="disconnect" onclick="disconnect();">Disconnect</button>
+                  <button id="clear" onclick="clear();">Clear</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
             <div class="col-md-6">
               <div class="d-flex justify-content-between">
                 <div>
                   <h4>Logs</h4>
                 </div>
                 <div>
-                  <button id="connect" onclick="connect();">Connect</button>
-                  <button id="disconnect" onclick="disconnect();">Disconnect</button>
-                  <button id="clear" onclick="clear();">Clear</button>
+                  <input type="text" id="search-input" class="form-control" onchange="filter()">
                 </div>
               </div>
 
@@ -215,18 +227,40 @@
   <script>
     const logsContainer = document.getElementById("logs-container");
 
-    const data = [];
+    let data = [];
 
     function addLog(log) {
       try {
-        let item = {id: data.length + 1, ...log}
+        let item = { id: data.length + 1, ...log }
         data.unshift(item);
         let ctn = document.createElement("div");
-        ctn.innerHTML = renderLog(item.id, item.time, item.from, 
-        item.text.length > 180 ? item.text.substring(0, 80) + "..." : item.text);
+        ctn.innerHTML = renderLog(item.id, item.time, item.from,
+          item.text.length > 180 ? item.text.substring(0, 80) + "..." : item.text);
         logsContainer.prepend(ctn);
       } catch (error) {
         console.error(error);
+      }
+    }
+
+    function filter() {
+      const txt = document.getElementById("search-input").value;
+
+
+      let cp = [];
+      console.log("Searched text ", txt);
+      console.log(data, cp);
+
+      if (txt.length > 0) {
+        cp = [...data.filter(log => log.text.includes(txt))]
+          .sort((al, bl) => al.id - bl.id);
+      } else {
+        cp = [...data]
+      }
+
+      clearNoData();
+      console.log(cp);
+      for (const log of cp) {
+        addLog(log);
       }
     }
   </script>
@@ -283,6 +317,10 @@
     function clear() {
       removeAllChildNodes(logsContainer);
       data = [];
+    }
+
+    function clearNoData() {
+      removeAllChildNodes(logsContainer);
     }
 
     function sendMessage() {
