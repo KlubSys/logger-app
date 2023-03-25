@@ -17,7 +17,7 @@ public class AppController {
     @GetMapping("/ui")
     public String index(Model model) {
         model.addAttribute("name", "App");
-        return "ui";
+        return "index";
     }
 
 }

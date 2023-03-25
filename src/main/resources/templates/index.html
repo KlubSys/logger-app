@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.108.0">
+  <title>Offcanvas navbar template · Bootstrap v5.3</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/offcanvas-navbar/">
+
+
+  <script src="./sockjs.min.js"></script>
+  <script src="./stomp.js"></script>
+
+
+  <link href="assets/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
+  <link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+  <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
+  <meta name="theme-color" content="#712cf9">
+
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    .b-example-divider {
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+    }
+
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
+
+    .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+    }
+
+    .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    pre {
+      padding: 5px;
+      margin: 5px;
+    }
+
+    .string {
+      color: green;
+    }
+
+    .number {
+      color: darkorange;
+    }
+
+    .boolean {
+      color: blue;
+    }
+
+    .null {
+      color: magenta;
+    }
+
+    .key {
+      color: red;
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="assets/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-light" onload="disconnect()">
+
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">KLUB LOGGER</a>
+      <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="nav-scroller bg-body shadow-sm">
+    <nav class="nav" aria-label="Secondary navigation">
+      <a class="nav-link active menu-link menu-link-1" aria-current="page" href="#">Dashboard</a>
+      <a class="nav-link menu-link menu-link-2" href="#">
+        Blocs
+        <span class="badge text-bg-light rounded-pill align-text-bottom">0</span>
+      </a>
+      <a class="nav-link menu-link menu-link-2" href="#">Uploads Requests</a>
+    </nav>
+  </div>
+
+  <main class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+      <img class="me-3" src="assets/img/cube_logo.png" alt="" width="48" height="38">
+      <div class="lh-1">
+        <h1 class="h6 mb-0 text-white lh-1">KLUB</h1>
+        <small>--</small>
+      </div>
+    </div>
+
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+      <div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h4>Logs</h4>
+                </div>
+                <div>
+                  <button id="connect" onclick="connect();">Connect</button>
+                  <button id="disconnect" onclick="disconnect();">Disconnect</button>
+                  <button id="clear" onclick="clear();">Clear</button>
+                </div>
+              </div>
+
+
+              <style>
+                .log-container {}
+
+                .log-title {
+                  font-size: 1.2em;
+                  font-weight: 500
+                }
+              </style>
+
+              <div class="mt-4"
+                style="width: 600px; max-width: 600px; font-size: 0.9em; height: 500px; max-height: 500px; padding: 20px; overflow-y: scroll;">
+                <div class="border-start px-3 pt-5" id="logs-container">
+                  <!-- content here -->
+                </div>
+              </div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="col-md-6">
+              <div id="json-container" class="mt-4"
+                style="font-size: 0.9em; height: 500px; max-height: 500px; padding: 20px; overflow-y: scroll;">
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+  </main>
+
+
+  <!--<script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>-->
+
+  <!--<script src="offcanvas-navbar.js"></script>-->
+  <script src="./src/utils.js"></script>
+  <script src="./log.template.js"></script>
+  <script src="./pretty.js"></script>
+
+  <script>
+    const logsContainer = document.getElementById("logs-container");
+
+    const data = [];
+
+    function addLog(log) {
+      try {
+        let item = {id: data.length + 1, ...log}
+        data.unshift(item);
+        let ctn = document.createElement("div");
+        ctn.innerHTML = renderLog(item.id, item.time, item.from, 
+        item.text.length > 180 ? item.text.substring(0, 80) + "..." : item.text);
+        logsContainer.prepend(ctn);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  </script>
+
+
+
+  <script type="text/javascript">
+
+    var stompClient = null;
+
+    function setConnected(connected) {
+
+      try {
+        document.getElementById('connect').disabled = connected;
+        document.getElementById('disconnect').disabled = !connected;
+        document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
+        document.getElementById('response').innerHTML = '';
+      } catch (error) {
+
+      }
+    }
+
+    function connect() {
+
+      var socket = new SockJS('/chat');
+      stompClient = Stomp.over(socket);
+
+      stompClient.connect({}, function (frame) {
+
+        setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/messages', function (messageOutput) {
+
+          showMessageOutput(JSON.parse(messageOutput.body));
+        });
+
+        stompClient.subscribe('/topic/logs', function (messageOutput) {
+
+          showMessageOutput(JSON.parse(messageOutput.body));
+        });
+      });
+    }
+
+    function disconnect() {
+
+      if (stompClient != null) {
+        stompClient.disconnect();
+      }
+
+      setConnected(false);
+      console.log("Disconnected");
+    }
+
+    function clear() {
+      removeAllChildNodes(logsContainer);
+      data = [];
+    }
+
+    function sendMessage() {
+
+      var from = document.getElementById('from').value;
+      var text = document.getElementById('text').value;
+      stompClient.send("/app/chat", {}, JSON.stringify({ 'from': from, 'text': text }));
+    }
+
+    function showMessageOutput(messageOutput) {
+
+      /*var response = document.getElementById('response');
+      var p = document.createElement('p');
+      p.style.wordWrap = 'break-word';
+      p.appendChild(document.createTextNode(messageOutput.from + ": " + messageOutput.text + " (" + messageOutput.time + ")"));
+      response.appendChild(p);*/
+      addLog(messageOutput);
+    }
+
+  </script>
+</body>
+
+</html>
