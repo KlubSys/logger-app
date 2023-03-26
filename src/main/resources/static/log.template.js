@@ -1,5 +1,5 @@
 const LOG_TEMPLATE = `
-<div class="d-flex mb-4" data-id="@id">
+<div class="d-flex mb-4 log" data-id="@id">
   <div>
     <div class="bg-purple" style="width: 30px; height: 30px; border-radius: 50%;position: relative; left: -32px;"></div>
   </div>

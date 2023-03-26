@@ -188,6 +188,9 @@
               <div class="mt-4"
                 style="width: 600px; max-width: 600px; font-size: 0.9em; height: 500px; max-height: 500px; padding: 20px; overflow-y: scroll;">
                 <div class="border-start px-3 pt-5" id="logs-container">
+                  <div class="card border-light" id="text-container">
+
+                  </div>
                   <!-- content here -->
                 </div>
               </div>
@@ -220,6 +223,8 @@
     crossorigin="anonymous"></script>-->
 
   <!--<script src="offcanvas-navbar.js"></script>-->
+  <script src="./assets/bootstrap.bundle.min.js"></script>
+  <script src="./jquery-3.6.4.min.js"></script>
   <script src="./src/utils.js"></script>
   <script src="./log.template.js"></script>
   <script src="./pretty.js"></script>
@@ -228,11 +233,13 @@
     const logsContainer = document.getElementById("logs-container");
 
     let data = [];
+    let dataMapper = [];
 
     function addLog(log) {
       try {
         let item = { id: data.length + 1, ...log }
         data.unshift(item);
+        dataMapper[`${item.id}`] = item;
         let ctn = document.createElement("div");
         ctn.innerHTML = renderLog(item.id, item.time, item.from,
           item.text.length > 180 ? item.text.substring(0, 80) + "..." : item.text);
@@ -263,6 +270,16 @@
         addLog(log);
       }
     }
+
+    $(document).on('click', '.log', function(event) {
+      let id = $(this).attr("data-id");
+      console.log(id, $(event.target));
+
+      let item = dataMapper[id];
+
+      var str = JSON.stringify(item.data, undefined, 4);
+      output(syntaxHighlight(str));
+    });
   </script>
 
 

@@ -24,8 +24,8 @@ public class AppApiController {
     public OutputMessage dispatchLogs(@RequestBody Message message){
         final String time = new SimpleDateFormat("HH:mm").format(new Date());
         this.simpMessagingTemplate.convertAndSend("/topic/messages",
-                new OutputMessage(message.getFrom(), message.getText(), time));
-        return new OutputMessage(message.getFrom(), message.getText(), time);
+                new OutputMessage(message.getFrom(), message.getText(), time, message.getData()));
+        return new OutputMessage(message.getFrom(), message.getText(), time, message.getData());
     }
 }
 
