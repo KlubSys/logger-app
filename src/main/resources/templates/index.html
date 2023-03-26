@@ -188,9 +188,6 @@
               <div class="mt-4"
                 style="width: 600px; max-width: 600px; font-size: 0.9em; height: 500px; max-height: 500px; padding: 20px; overflow-y: scroll;">
                 <div class="border-start px-3 pt-5" id="logs-container">
-                  <div class="card border-light" id="text-container">
-
-                  </div>
                   <!-- content here -->
                 </div>
               </div>
@@ -206,6 +203,9 @@
 
 
             <div class="col-md-6">
+              <div class="card border-light mb-2" id="text-container">
+
+              </div>
               <div id="json-container" class="mt-4"
                 style="font-size: 0.9em; height: 500px; max-height: 500px; padding: 20px; overflow-y: scroll;">
 
@@ -276,9 +276,11 @@
       console.log(id, $(event.target));
 
       let item = dataMapper[id];
+      removeAllChildNodes(document.getElementById("json-container"));
 
       var str = JSON.stringify(item.data, undefined, 4);
       output(syntaxHighlight(str));
+      document.getElementById("text-container").innerText = item.text;
     });
   </script>
 
@@ -334,6 +336,7 @@
     function clear() {
       removeAllChildNodes(logsContainer);
       data = [];
+      dataMapper = {};
     }
 
     function clearNoData() {
